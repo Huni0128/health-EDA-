@@ -35,7 +35,7 @@ class HealthDataVisualizer:
         self.plot_pie_chart("함께 운동을 할 사람이 없어서", ax[1], "함께 운동을 할 사람이 없어서")
         plt.savefig(save_path)
 
-health_data = HealthDataProcessor("./data/health_data.xlsx")
+health_data = HealthDataProcessor("./data/not_exercising.xlsx")
 health_data.load_data()
 data = health_data.get_data()
 
