@@ -25,8 +25,8 @@ class HealthDataVisualizer:
         self.data = data
 
     def plot_pie_chart(self, column, ax, title):
-        self.data[column].plot.pie(explode=[0,0.02], ax=ax, autopct="%1.1f%%")
-        ax.set_title(title)
+        self.data[column].plot.pie(explode=[0,0.02], ax=ax, autopct="%1.1f%%", textprops={"fontsize": 16, 'fontweight': 'bold'})
+        ax.set_title(title, fontsize=20, fontweight='bold')
         ax.set_ylabel("")
 
     def visualize(self, save_path):
@@ -40,4 +40,4 @@ health_data.load_data()
 data = health_data.get_data()
 
 visualizer = HealthDataVisualizer(data)
-visualizer.visualize("man_women.png")
+visualizer.visualize("images/man_women.png")
