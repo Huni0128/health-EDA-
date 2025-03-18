@@ -29,6 +29,12 @@
 
 ### 예시 결과
 
+<div align="center">
+  <img src="images/man_women.png" alt="남자,여자 운동하지 않는 이유" width="500"/>
+  <br/>
+  <em>남자,여자 운동하지 않는 이유</em>
+  <br/>
+</div>
 
 ---
 
