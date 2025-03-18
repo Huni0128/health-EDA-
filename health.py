@@ -4,14 +4,40 @@ import matplotlib
 
 matplotlib.rc("font", family="NanumGothic")
 
-health_data = pd.read_excel("./data/health_data.xlsx")
+class HealthDataProcessor:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.data = None
 
-health_data = health_data.drop(columns="시점") # 시점 칼럼 삭제
-health_data = health_data[health_data["대분류"]=="성별"]
-health_data = health_data.rename(columns={"합계": "운동을 할 충분한 시간이 없어서"})
-health_data = health_data.set_index("분류")
+    def load_data(self):
+        self.data = pd.read_excel(self.file_path)
+        self.data = self.data.drop(columns="시점")
+        self.data = self.data[self.data["대분류"]=="성별"]
+        self.data = self.data.rename(columns={"합계": "운동을 할 충분한 시간이 없어서"})
+        self.data = self.data.rename(columns={"합계.1": "함께 운동을 할 사람이 없어서"})
+        self.data = self.data.set_index("분류")
 
-plt.figure(figsize=(10,8))
-health_data["운동을 할 충분한 시간이 없어서"].plot.pie(explode=(0,0.02))
-plt.savefig("man_women.png")
-print(health_data)
+    def get_data(self):
+        return self.data
+
+class HealthDataVisualizer:
+    def __init__(self, data):
+        self.data = data
+
+    def plot_pie_chart(self, column, ax, title):
+        self.data[column].plot.pie(explode=[0,0.02], ax=ax, autopct="%1.1f%%")
+        ax.set_title(title)
+        ax.set_ylabel("")
+
+    def visualize(self, save_path):
+        fig, ax = plt.subplots(1, 2, figsize=(16, 8))
+        self.plot_pie_chart("운동을 할 충분한 시간이 없어서", ax[0], "운동을 할 충분한 시간이 없어서")
+        self.plot_pie_chart("함께 운동을 할 사람이 없어서", ax[1], "함께 운동을 할 사람이 없어서")
+        plt.savefig(save_path)
+
+health_data = HealthDataProcessor("./data/health_data.xlsx")
+health_data.load_data()
+data = health_data.get_data()
+
+visualizer = HealthDataVisualizer(data)
+visualizer.visualize("man_women.png")
